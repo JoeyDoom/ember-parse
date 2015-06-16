@@ -99,7 +99,8 @@ export default DS.RESTSerializer.extend({
     if ('createdAt' === key ||
         'updatedAt' === key ||
         'emailVerified' === key ||
-        'sessionToken' === key
+        'sessionToken' === key ||
+        'password' === key
     ) {
       delete json[key];
 
@@ -188,11 +189,12 @@ export default DS.RESTSerializer.extend({
       }
 
       var relationshipType = snapshot.type.determineRelationshipType(relationship);
-
-      if (relationshipType === 'manyToNone' || relationshipType === 'manyToMany') {
+      //ADDED manyToOne
+      if (relationshipType === 'manyToNone' || relationshipType === 'manyToMany' || relationshipType === 'manyToOne') {
         var objects = [],
             objectsForKey = snapshot.hasMany(key),
-            objectsBeforeUpdate = snapshot.record._internalModel._relationships.get(key).canonicalMembers,
+            // CHANGED THIS ONE TOO
+            objectsBeforeUpdate = snapshot.record._relationships[key].canonicalMembers,
             operation = 'AddRelation';
 
         // Check if this is removing the last relation for a key

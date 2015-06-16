@@ -10,7 +10,8 @@ export default Ember.Service.extend({
     Ember.Logger.debug('DEBUG: Parse session service: init()');
 
     var key = this.get('sessionStoreKey'),
-        store = this.container.lookup('store:application'),
+        //store = this.container.lookup('store:application'),
+        store = this.container.lookup('store:main'),
         model = store.modelFor('user'),
         adapter = store.adapterFor('application'),
         serializer = store.serializerFor('user');
@@ -46,7 +47,8 @@ export default Ember.Service.extend({
 
   authenticate(username, password) {
     var key = this.get('sessionStoreKey'),
-        store = this.container.lookup('store:application'),
+        // store = this.container.lookup('store:application'),
+        store = this.container.lookup('store:main'),
         model = store.modelFor('user'),
         adapter = store.adapterFor('application'),
         serializer = store.serializerFor('user');
@@ -86,7 +88,8 @@ export default Ember.Service.extend({
   invalidate() {
     if (this.get('isAuthenticated')) {
       var key = this.get('sessionStoreKey'),
-          store = this.container.lookup('store:application'),
+          // store = this.container.lookup('store:application'),
+          store = this.container.lookup('store:main'),
           adapter = store.adapterFor('application');
 
       // Call logout on Parse
@@ -113,7 +116,8 @@ export default Ember.Service.extend({
   },
 
   signup(userData) {
-    var store = this.container.lookup('store:application'),
+    var store = this.container.lookup('store:main'),
+        // store = this.container.lookup('store:application'),
         model = store.modelFor('user'),
         adapter = store.adapterFor('user'),
         serializer = store.serializerFor('user');
@@ -132,7 +136,8 @@ export default Ember.Service.extend({
   },
 
   requestPasswordReset(email) {
-    var store = this.container.lookup('store:application'),
+    var store = this.container.lookup('store:main'),
+        // store = this.container.lookup('store:application'),
         adapter = store.adapterFor('application'),
         data = {
           _method: 'POST',
