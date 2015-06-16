@@ -158,6 +158,28 @@ export default DS.RESTSerializer.extend({
           write: true
         };
       }
+
+      //roles
+      if (ParseACL.role) {
+        policy[ParseACL.role] = {};
+
+        if (ParseACL.rolePermissions) {
+          policy[ParseACL.role] = ParseACL.rolePermissions;
+        } else {
+          //role defaults
+          policy[ParseACL.role] = {
+            read: true,
+          };
+        };
+      }
+
+      //set up public read ACL by using publicRead:true
+      if (ParseACL.publicRead === true) {
+        policy["*"] = {};
+        policy["*"] = {
+          read: true
+        }
+      }
       hash.ACL = policy;
     }
 
