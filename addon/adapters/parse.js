@@ -228,11 +228,16 @@ export default DS.RESTAdapter.extend({
   *     });
   */
   findQuery(store, type, query) {
+   var data = { _method: 'GET' };
     if (query.where && 'string' !== Ember.typeOf(query.where)) {
       query.where = JSON.stringify(query.where);
+      data.where = query.where;
     }
-
-    // Pass to _super()
-    return this._super(store, type, query);
+    //added ability to handle order
+    if (query.order) {
+      console.log(query.order);
+      data.order = query.order;
+    }
+    return this.ajax(this.buildURL(type.modelName), 'POST', { data: data });
   }
 });
